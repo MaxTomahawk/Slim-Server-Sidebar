@@ -1,0 +1,15 @@
+{
+  "name": "slim-server-sidebar",
+  "version": "1.0.0",
+  "description": "A modular CSS-addon for Discord that transforms the server list into a slinky, collapsible list with names.",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass src/SlimServerSidebar.scss SlimServerSidebar.css --no-source-map",
+    "watch": "sass src/SlimServerSidebar.scss SlimServerSidebar.css --watch --no-source-map"
+  },
+  "author": "MaxTomahawk",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.75.0"
+  }
+}
