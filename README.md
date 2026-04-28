@@ -3,10 +3,11 @@
 A modular CSS-addon for Discord (compatible with Vencord, Vesktop, and BetterDiscord) that transforms the server list from thick icons into a slinky, collapsible list with names.
 
 ## Features
-- **Slim by default**: Only 72px wide, keeping your interface clean.
-- **Dynamic expansion**: Expands to 240px on `:hover` or `:focus-within`.
-- **Tab-style icons**: Icons are transformed into small squares/tabs.
-- **Server names**: Automatically extracts and displays server names from the `data-dnd-name` attribute.
+- **Ultra Slim**: Only 36px wide in collapsed mode.
+- **Dynamic expansion**: Expands to 240px on `:hover`.
+- **Row Styling**: Compact 24px rows for a dense, professional look.
+- **Icon Scaling**: 20px icons for maximum visibility in slim mode.
+- **Folder Names**: Automatically extracts and displays folder and server names from the `data-dnd-name` attribute.
 - **Modular & Theme-aware**: Uses Discord's native CSS variables to match your active theme.
 
 ## Installation
