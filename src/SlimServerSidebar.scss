@@ -2,146 +2,223 @@
  * @name Slim Server Sidebar
  * @author MaxTomahawk
  * @description A modular CSS-addon for Discord that transforms the server list into a slinky, collapsible list with names.
- * @version 1.1.0
+ * @version 2.0.0
  * @website https://github.com/MaxTomahawk/Slim-Server-Sidebar
  * @source https://raw.githubusercontent.com/MaxTomahawk/Slim-Server-Sidebar/deploy/SlimServerSidebar.css
  */
 
+/* ==============================
+   CSS VARIABLES
+   ============================== */
 :root {
-    --slim-width-collapsed: 36px;
-    --slim-width-expanded: 240px;
-    --slim-transition: 0.3s ease-in-out;
-    --slim-row-height: 24px;
-    --slim-icon-size: 20px;
+    --slim-collapsed: 48px;
+    --slim-expanded: 240px;
+    --slim-speed: 0.3s ease-in-out;
+    --slim-row-h: 32px;
+    --slim-icon: 32px;
 }
 
-/* Main Sidebar Wrapper */
-.guilds__5e434 {
-    width: var(--slim-width-collapsed) !important;
-    transition: width var(--slim-transition) !important;
-}
-
-.guilds__5e434:hover {
-    width: var(--slim-width-expanded) !important;
-}
-
-/* Ensure scroller doesn't clip content */
-.scroller_ef3116 {
+/* ==============================
+   MAIN SIDEBAR CONTAINER
+   The outermost nav wrapper that contains the entire guild list.
+   We target both the nav wrapper and the guilds container.
+   ============================== */
+nav.guilds__5e434 {
+    width: var(--slim-collapsed) !important;
+    transition: width var(--slim-speed) !important;
     overflow: visible !important;
+    z-index: 2;
 }
 
-.stack_dbd263 {
+nav.guilds__5e434:hover,
+nav.guilds__5e434:focus-within {
+    width: var(--slim-expanded) !important;
+}
+
+/* ==============================
+   TREE & SCROLLER
+   The internal tree and scroller containers need to
+   fill the width and allow horizontal overflow for the
+   expanding transition.
+   ============================== */
+nav.guilds__5e434 .tree_ef3116 {
     width: 100% !important;
-}
-
-/* Row Height & List Items */
-.listItem__650eb {
-    width: 100%;
-    height: var(--slim-row-height) !important;
-    margin: 0 0 4px 0 !important;
-    padding: 0 8px !important;
-    display: flex;
-    align-items: center;
-    position: relative;
     overflow: visible !important;
 }
 
-/* Icons Scaling - Targeting the wrapper and its SVG children */
-.wrapper_cc5dd2, 
-.wrapper_cc5dd2 svg,
-.wrapper_cc5dd2 foreignObject,
-.wrapper_cc5dd2 mask,
-.wrapper_cc5dd2 img {
-    width: var(--slim-icon-size) !important;
-    height: var(--slim-icon-size) !important;
+nav.guilds__5e434 .scroller_ef3116 {
+    width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding-right: 0 !important;
 }
 
-/* Reset SVG viewBox logic if needed */
-.svg_cc5dd2 {
-    viewBox: 0 0 40 40 !important; /* Force internal scaling */
-}
-
-/* Pill Scaling (Indicator) */
-[class*="pill"] {
-    height: var(--slim-row-height) !important;
-    display: flex;
-    align-items: center;
-}
-
-[class*="pill"] [class*="item"] {
-    height: 12px !important; /* Scaled down pill height */
-    width: 4px !important;
-    border-radius: 0 4px 4px 0 !important;
-}
-
-/* Name Extraction & Logic */
-[data-dnd-name] {
-    position: relative;
+/* ==============================
+   LIST ITEMS
+   Each server/folder row in the sidebar.
+   ============================== */
+nav.guilds__5e434 .listItem__650eb {
+    height: var(--slim-row-h) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    margin: 2px 0 !important;
+    padding: 0 !important;
     overflow: visible !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-[data-dnd-name]::after {
+/* ==============================
+   ICON WRAPPERS
+   Scale the server icons down to fit the slim sidebar.
+   Using transform: scale() preserves the internal SVG
+   rendering while reducing visual size.
+   ============================== */
+nav.guilds__5e434 .wrapper_cc5dd2 {
+    width: var(--slim-icon) !important;
+    height: var(--slim-icon) !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+nav.guilds__5e434 .wrapper_cc5dd2 svg {
+    width: var(--slim-icon) !important;
+    height: var(--slim-icon) !important;
+}
+
+nav.guilds__5e434 .wrapper_cc5dd2 foreignObject {
+    width: var(--slim-icon) !important;
+    height: var(--slim-icon) !important;
+    mask: none !important;
+}
+
+nav.guilds__5e434 .wrapper_cc5dd2 foreignObject img,
+nav.guilds__5e434 .wrapper_cc5dd2 foreignObject [class*="icon"] {
+    width: var(--slim-icon) !important;
+    height: var(--slim-icon) !important;
+    border-radius: 50% !important;
+}
+
+/* ==============================
+   PILL INDICATORS
+   The colored bar on the left that indicates unread/active.
+   ============================== */
+nav.guilds__5e434 [class*="pill"] {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* ==============================
+   SERVER/FOLDER NAMES
+   Use the data-dnd-name attribute to display names
+   alongside icons when the sidebar is expanded.
+   ============================== */
+nav.guilds__5e434 [data-dnd-name] {
+    display: flex !important;
+    align-items: center !important;
+    overflow: visible !important;
+    position: relative !important;
+    flex-wrap: nowrap !important;
+}
+
+nav.guilds__5e434 [data-dnd-name]::after {
     content: attr(data-dnd-name);
-    position: absolute;
-    left: 30px; /* Adjusted based on icon size + padding */
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
+    display: inline-block;
     white-space: nowrap;
-    margin-left: 10px;
-    transition: opacity 0.2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
+    opacity: 0;
+    margin-left: 8px;
     color: var(--header-primary);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
+    line-height: var(--slim-row-h);
+    transition: opacity 0.2s ease, max-width 0.3s ease;
     pointer-events: none;
-    z-index: 10;
 }
 
-.guilds__5e434:hover [data-dnd-name]::after {
+nav.guilds__5e434:hover [data-dnd-name]::after,
+nav.guilds__5e434:focus-within [data-dnd-name]::after {
     opacity: 1;
+    max-width: 180px;
 }
 
-/* Folders */
-.folderHeader__48112 {
-    height: var(--slim-row-height) !important;
-    background-color: transparent !important;
-    display: flex;
-    align-items: center;
-    width: 100% !important;
+/* ==============================
+   FOLDER STYLING
+   ============================== */
+nav.guilds__5e434 [class*="folderHeader"] {
+    height: var(--slim-row-h) !important;
+    display: flex !important;
+    align-items: center !important;
     overflow: visible !important;
 }
 
-.folderButton__48112 {
-    width: var(--slim-icon-size) !important;
-    height: var(--slim-icon-size) !important;
-    background-color: transparent !important;
+nav.guilds__5e434 [class*="expandedFolderBackground"] {
+    width: 100% !important;
+    border-radius: 0 !important;
+    left: 0 !important;
 }
 
-/* Remove 2x2 grid preview in closed folders */
-.folderPreviewWrapper__48112 {
+/* Hide the 2x2 mini-icon grid in closed folders */
+nav.guilds__5e434 [class*="folderPreview"] {
     display: none !important;
 }
 
-/* Show folder names on expand - they are already handled by [data-dnd-name] */
+nav.guilds__5e434 [class*="folderButton"] {
+    width: var(--slim-icon) !important;
+    height: var(--slim-icon) !important;
+    flex-shrink: 0 !important;
+}
 
-/* Adjust Sidebar Clutter */
-[class*="guildSeparator"] {
-    width: 20px;
+/* ==============================
+   SEPARATORS
+   ============================== */
+nav.guilds__5e434 [class*="guildSeparator"] {
+    width: calc(var(--slim-icon) - 8px);
     margin: 4px auto;
 }
 
-/* Hide Home text if any */
-.tutorialContainer__1f388 .hiddenVisually_b18fe2 {
-    display: none;
+/* ==============================
+   HOME / DM BUTTON
+   ============================== */
+nav.guilds__5e434 .tutorialContainer__1f388 {
+    overflow: visible !important;
 }
 
-/* Home Icon specific scaling if needed */
-.tutorialContainer__1f388 .childWrapper__6e9f8 {
-    width: var(--slim-icon-size) !important;
-    height: var(--slim-icon-size) !important;
+nav.guilds__5e434 .tutorialContainer__1f388 .childWrapper__6e9f8 {
+    width: var(--slim-icon) !important;
+    height: var(--slim-icon) !important;
 }
 
-.tutorialContainer__1f388 .childWrapper__6e9f8 svg {
-    width: 14px !important;
-    height: 14px !important;
+nav.guilds__5e434 .tutorialContainer__1f388 .childWrapper__6e9f8 svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Hide any visually-hidden text that could take up space */
+nav.guilds__5e434 .hiddenVisually_b18fe2 {
+    display: none !important;
+}
+
+/* ==============================
+   UNREAD INDICATOR BAR
+   ============================== */
+nav.guilds__5e434 .unreadMentionsIndicatorTop_ef3116,
+nav.guilds__5e434 .unreadMentionsIndicatorBottom_ef3116 {
+    width: 100% !important;
+}
+
+/* ==============================
+   TOOLTIP ADJUSTMENTS
+   Tooltips should still work when hovering icons in collapsed mode.
+   ============================== */
+nav.guilds__5e434:hover [class*="tooltip"],
+nav.guilds__5e434:focus-within [class*="tooltip"] {
+    display: none !important;
 }
