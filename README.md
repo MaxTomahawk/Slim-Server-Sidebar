@@ -10,22 +10,9 @@ A modular CSS-addon for Discord (compatible with Vencord, Vesktop, and BetterDis
 - **Modular & Theme-aware**: Uses Discord's native CSS variables to match your active theme.
 
 ## Installation
+**Powercord Install**: `git clone https://github.com/MaxTomahawk/Slim-Server-Sidebar --branch deploy`
 
-### BetterDiscord
-1. Open Discord Settings > BetterDiscord > Themes.
-2. Click "Open Theme Folder".
-3. Create a new file named `SlimServerSidebar.theme.css`.
-4. Paste the following import at the top:
-   ```css
-   @import url('https://raw.githubusercontent.com/MaxTomahawk/Slim-Server-Sidebar/deploy/SlimServerSidebar.css');
-   ```
-
-### Vencord / Vesktop
-1. Open Discord Settings > Vencord > Themes.
-2. In the "Online Themes" section or "Custom CSS" section, add the following:
-   ```css
-   @import url('https://raw.githubusercontent.com/MaxTomahawk/Slim-Server-Sidebar/deploy/SlimServerSidebar.css');
-   ```
+**Vencord Theme**: `https://raw.githubusercontent.com/MaxTomahawk/Slim-Server-Sidebar/deploy/SlimServerSidebar.css`
 
 ## Development
 This project uses SCSS. To compile locally:
