@@ -1,0 +1,98 @@
+/**
+ * @name Slim Server Sidebar
+ * @author MaxTomahawk
+ * @description A modular CSS-addon for Discord that transforms the server list into a slinky, collapsible list with names.
+ * @version 1.0.0
+ * @website https://github.com/MaxTomahawk/Slim-Server-Sidebar
+ * @source https://raw.githubusercontent.com/MaxTomahawk/Slim-Server-Sidebar/deploy/SlimServerSidebar.css
+ */
+:root {
+  --slim-width-collapsed: 72px;
+  --slim-width-expanded: 240px;
+  --slim-transition: 0.3s ease-in-out;
+  --slim-icon-size: 24px;
+}
+
+/* Sidebar Container */
+.stack_dbd263[aria-label=Servers] {
+  width: var(--slim-width-collapsed);
+  transition: width var(--slim-transition);
+  overflow: hidden;
+  background-color: var(--bg-tertiary);
+  border-right: 1px solid var(--bg-secondary);
+}
+
+/* Expand on Hover or Focus */
+.stack_dbd263[aria-label=Servers]:hover,
+.stack_dbd263[aria-label=Servers]:focus-within {
+  width: var(--slim-width-expanded);
+}
+
+/* Server Items Layout */
+.listItem__650eb {
+  width: 100%;
+  margin: 0;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: background-color var(--slim-transition);
+}
+
+.listItem__650eb:hover {
+  background-color: var(--bg-modifier-hover);
+}
+
+/* Icon Transformation to Tabs */
+.wrapper_cc5dd2 {
+  width: var(--slim-icon-size) !important;
+  height: var(--slim-icon-size) !important;
+  border-radius: 4px !important; /* Tab style */
+  transition: all var(--slim-transition);
+}
+
+.wrapper_cc5dd2 foreignObject,
+.wrapper_cc5dd2 svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Name Extraction via data-dnd-name */
+.listItem__650eb [class*=wrapper]::after {
+  content: attr(data-dnd-name);
+  position: absolute;
+  left: 48px;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity var(--slim-transition);
+  pointer-events: none;
+}
+
+/* Show Names on Expand */
+.stack_dbd263[aria-label=Servers]:hover .listItem__650eb [class*=wrapper]::after,
+.stack_dbd263[aria-label=Servers]:focus-within .listItem__650eb [class*=wrapper]::after {
+  opacity: 1;
+}
+
+/* Folders */
+.folderHeader__48112 {
+  background-color: transparent !important;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.folderGuildsList__48112 {
+  margin-left: 12px;
+  border-left: 2px solid var(--bg-secondary);
+  transition: border-color var(--slim-transition);
+}
+
+/* Hide some Discord clutter if needed */
+.guildSeparator_d0c571 {
+  width: 80%;
+  margin: 8px auto;
+}
